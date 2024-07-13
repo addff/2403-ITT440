@@ -1,1 +1,42 @@
 
+
+This is the coding
+
+
+def nth_term_arithmetic(a, d, n):
+    return a + (n - 1) * d
+
+def sum_of_arithmetic(a, d, n):
+    return n / 2 * (2 * a + (n - 1) * d)
+
+def nth_term_geometric(a, r, n):
+    return a * r ** (n - 1)
+
+def sum_of_geometric(a, r, n):
+    if r == 1:
+        return a * n
+    else:
+        return a * (1 - r ** n) / (1 - r)
+
+# Example Usage
+a_ap = 3  # First term of AP
+d_ap = 2  # Common difference of AP
+n_ap = 5  # Term number for AP
+
+a_gp = 2  # First term of GP
+r_gp = 3  # Common ratio of GP
+n_gp = 4  # Term number for GP
+
+# Calculate AP values
+nth_term_ap = nth_term_arithmetic(a_ap, d_ap, n_ap)
+sum_ap = sum_of_arithmetic(a_ap, d_ap, n_ap)
+
+# Calculate GP values
+nth_term_gp = nth_term_geometric(a_gp, r_gp, n_gp)
+sum_gp = sum_of_geometric(a_gp, r_gp, n_gp)
+
+print(f"The {n_ap}th term of the arithmetic progression is: {nth_term_ap}")
+print(f"The sum of the first {n_ap} terms of the arithmetic progression is: {sum_ap}")
+
+print(f"The {n_gp}th term of the geometric progression is: {nth_term_gp}")
+print(f"The sum of the first {n_gp} terms of the geometric progression is: {sum_gp}")
