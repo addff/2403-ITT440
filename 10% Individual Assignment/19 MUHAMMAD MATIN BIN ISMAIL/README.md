@@ -178,10 +178,19 @@ done
 
 ## 🏃‍♂️ Running the Script
 
-1. Create and edit the script: `vi "website_check.sh"`.
-2. Press `i` to enter insert mode, paste the provided script, then press `Esc`, type `:wq`, and press `Enter` to save and exit.
-3. Make it executable with: `chmod +x website_check.sh`.
-4. Run the script using: `./website_check.sh`.
+### 1. Create and edit the script: 
+```bash
+vi "website_check.sh"
+```
+### 2. Press `i` to enter insert mode, paste the provided script, then press `Esc`, type `:wq`, and press `Enter` to save and exit.
+### 3. Make it executable with: 
+```bash
+chmod +x website_check.sh
+```
+### 4. Run the script using: 
+```bash
+./website_check.sh
+```
 
 ## 📝 Full Code
 
@@ -299,7 +308,16 @@ while true; do
     exit 0
   fi
 done
-```   
+```
+## 📸 Expected Output
+
+Here is a screenshot of the expected output from running the script in MobaXterm:
+
+![Screenshot 2024-07-24 023849](https://github.com/user-attachments/assets/5a7da5c5-89c1-44d1-93d6-86d317ab3477)
+![Screenshot 2024-07-24 023911](https://github.com/user-attachments/assets/8c6c1f40-7f58-4c6d-b621-d80ed453a961)
+![Screenshot 2024-07-24 023927](https://github.com/user-attachments/assets/5fca60cc-b5eb-4f2c-a419-c6b1e7d9e0ad)
+![Screenshot 2024-07-24 023954](https://github.com/user-attachments/assets/09d95244-e192-4844-8661-7b2ebbc9643f)
+
 
 ## 🎉 Conclusion
 Congratulations! You've created a powerful shell script that provides a comprehensive analysis of any website. Use this tool to monitor and investigate websites with ease. Feel free to modify and extend it as needed!
