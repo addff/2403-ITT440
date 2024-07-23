@@ -1,134 +1,309 @@
-# Shell Scripts
+# 🖥️ Website Analysis Shell Script Tutorial
 
-A shell script is a text file containing a sequence of commands for a Unix shell, which is a command-line interpreter. The commands in a shell script are executed by the shell, which reads the script and carries out the commands as if they were entered directly on the command line.
+Welcome to this comprehensive guide on writing a **complex shell script** that performs an in-depth analysis of websites! 🌐 This script checks various aspects of a website, including HTTP status, WHOIS data, DNS and IP information, and hosting details.
 
-## How a Shell Script Works
+## 📝 Overview
 
-1. **Creation**: Write a list of commands in a file using a text editor like Nano or Vim.
-2. **Shebang**: Include a `shebang` (`#!`) at the beginning of the script followed by the path to the shell (e.g., `#!/bin/bash`).
-3. **Execution**: Run the script, and the shell reads the file, executing the commands in order.
-4. **Automation**: Use shell scripts to automate repetitive tasks, such as system backups, file management, and program execution.
+In this tutorial, you'll learn how to:
 
-### Example Script
+1. Prompt users to enter a website URL.
+2. Retrieve and process HTTP status codes.
+3. Fetch and parse WHOIS information.
+4. Extract DNS and IP details.
+5. Determine the hosting provider.
+6. Offer users the option to check additional websites or exit the script.
 
+## 🚀 Prerequisites
+
+Before you start, ensure you have:
+
+- Basic knowledge of shell scripting.
+- A Unix-like environment (Linux, macOS, or FreeBSD).
+- Installed utilities: `curl`, `whois`, `dig` or `host`, and `awk`.
+
+## 🛠️ Script Walkthrough
+
+### 1. Script Initialization
+Specify the shell interpreter and add a description.
 ```bash
-#!/bin/bash
-# This script will list all files in the current directory
-ls -l
-```
-## Example Script Explanation
-
-In this script:
-
-- `#!/bin/bash` specifies that the script should be run using the Bash shell.
-- `# This script will...` is a comment explaining what the script does.
-- `ls -l` is the command that lists the files in a long format.
-
-Shell scripts are powerful tools for system administrators, developers, and anyone who needs to perform routine tasks on Unix-like operating systems. They can be as simple or as complex as needed, and they’re an essential part of Unix and Linux system administration.
-
-## Purpose of a Shell Script
-
-The purpose of a shell script is to automate tasks that would otherwise be repetitive and time-consuming if performed manually. Shell scripts serve several key functions:
-
-- **Automation**: They can automate routine system tasks like backups, monitoring system resources, and managing user accounts, which saves time and reduces the likelihood of human error.
-- **Efficiency**: By scripting complex sequences of commands, tasks can be performed more quickly and with greater precision.
-- **Consistency**: Shell scripts ensure that tasks are performed in the same way every time, which is crucial for system administration and development environments.
-- **Flexibility**: They can be written to work across different Unix-like operating systems without modification, making them highly portable.
-- **Development Aid**: Developers often use shell scripts to automate parts of the development process, such as deploying software or running test suites.
-- **DevOps Tool**: In DevOps, shell scripts are used for rapid iteration, automation, configuration management, and troubleshooting.
-
-Overall, shell scripts are a powerful tool for system administrators, developers, and IT professionals to streamline their workflows and manage systems effectively. They allow for the execution of a series of commands as a single command, making complex tasks simpler and more manageable.
-## Types of Shell Scripts
-
-Unix-like systems offer a variety of shells, each with its own set of features and capabilities. Here are some of the most common types of shells:
-
-- **Bourne Shell (sh)**: The original Unix shell developed at AT&T Bell Labs, which is compact and fast, but lacks some features for interactive use.
-- **C Shell (csh)**: Known for its C-like syntax, making it easier for users familiar with the C programming language.
-- **Korn Shell (ksh)**: Combines features of both the Bourne and C shells, including scripting enhancements and command-line editing.
-- **Bourne Again Shell (bash)**: The most widely used shell today, it’s the default on most Linux distributions and offers extensive scripting capabilities.
-- **Tcsh Shell**: An enhanced version of the C shell with additional scripting features and command-line editing.
-- **Z Shell (zsh)**: Offers many improvements over bash, including better scripting, command completion, and theme support.
-
-Each shell has its own syntax and capabilities, making some more suitable for interactive use and others better for scripting. Users can choose a shell based on their specific needs or preferences.
-
-## Advantages and Disadvantages of Shell Scripts
-
-Shell scripting is a powerful tool in the Unix and Linux world, offering several advantages and some disadvantages. Here’s a summary of both:
-
-| **Advantages**                                                                 | **Disadvantages**                                                               |
-|-------------------------------------------------------------------------------|--------------------------------------------------------------------------------|
-| Simplicity: Easy to write and understand, especially for those familiar with the command line. | Performance: Slower than programs written in compiled languages like C or C++.  |
-| Efficiency: Quickly automate repetitive tasks, saving time and effort.        | Complexity: Can become unwieldy and difficult to maintain for very complex tasks.|
-| No Compilation Required: Run directly without compilation, making them faster to test and deploy. | Error Handling: Prone to errors; a single mistake can have unintended consequences. |
-| Portability: Can often be used across different Unix-like systems without modification. | Limited Features: Provide minimal data structures; not suited for complex data manipulation. |
-| Development Aid: Help in automating parts of the development process, such as testing and deployment. | Security Risks: Improperly written scripts can introduce security vulnerabilities, especially if run with superuser privileges. |                                                                           |
-
-In summary, shell scripting is an excellent choice for automating simple to moderately complex tasks on Unix-like systems. However, for performance-critical or highly complex applications, other programming languages might be more appropriate.
-
-## How to Write a Complex Shell Script
-
-Here’s a breakdown of how to write a complex shell script:
-
-1. **Shebang**: The script starts with `#!/bin/bash`, which is the shebang line. This tells the system to execute the script with the Bash shell.
-2. **Comments**: Lines starting with `#` are comments and are not executed. They are used to describe what the script or a part of the script does.
-3. **Variable Assignment**: `URL="http://your-web-server.com"` sets the variable `URL` to the address of your web server.
-4. **Command Substitution**: `HTTP_STATUS=$(curl -o /dev/null -s -w "%{http_code}\n" $URL)` uses `curl` to make an HTTP request to the server and captures the HTTP status code.
-    - `-o /dev/null` redirects the output of the request to `/dev/null` (which discards it).
-    - `-s` makes `curl` run in silent mode.
-    - `-w "%{http_code}\n"` tells `curl` to output the HTTP status code followed by a newline character.
-5. **Case Statement**: The `case` statement checks the first digit of the `HTTP_STATUS` variable to determine the class of the response.
-    - `"2")` matches any 2xx success status codes.
-    - `"3")` matches any 3xx redirection status codes.
-    - `"4")` matches any 4xx client error status codes.
-    - `"5")` matches any 5xx server error status codes.
-    - `*` is the default case that matches anything else.
-6. **Conditionals**: Inside the case for “4” and “5”, there are additional `if` statements to check for specific status codes like 404, 500, and 503.
-7. **Echo Commands**: The `echo` commands print out the corresponding message for each status code.
-
-### Example Script
-
-```bash
-#!/bin/bash
-# This script checks the HTTP status code of a web server.
-
-URL="http://your-web-server.com"
-HTTP_STATUS=$(curl -o /dev/null -s -w "%{http_code}\n" $URL)
-
-case "${HTTP_STATUS:0:1}" in
-  2)
-    echo "Success: The request was successful (status code: $HTTP_STATUS)."
-    ;;
-  3)
-    echo "Redirection: The request was redirected (status code: $HTTP_STATUS)."
-    ;;
-  4)
-    if [ "$HTTP_STATUS" -eq 404 ]; then
-      echo "Client Error: Not Found (status code: 404)."
-    else
-      echo "Client Error: The request contains bad syntax or cannot be fulfilled (status code: $HTTP_STATUS)."
-    fi
-    ;;
-  5)
-    if [ "$HTTP_STATUS" -eq 500 ]; then
-      echo "Server Error: Internal Server Error (status code: 500)."
-    elif [ "$HTTP_STATUS" -eq 503 ]; then
-      echo "Server Error: Service Unavailable (status code: 503)."
-    else
-      echo "Server Error: The server failed to fulfill an apparently valid request (status code: $HTTP_STATUS)."
-    fi
-    ;;
-  *)
-    echo "Unexpected status code: $HTTP_STATUS"
-    ;;
-esac
-
+#!/usr/local/bin/bash
+# This script checks the HTTP status code of a web server and provides additional information.
 ```
 
-### Steps to Write and Run the Script
+### 2. Continuous User Interaction
+Use a `while true` loop to allow checking multiple websites.
+```bash
+while true; do
+  # Prompt the user to enter the website URL
+  read -p "Enter the website URL (e.g., http://example.com): " URL
+```
 
-1. **Open a text editor** and input the code.
-2. **Save the file** with a `.sh` extension, for example, `check_status.sh`.
-3. **Make the script executable** with the command `chmod +x check_status.sh`.
-4. **Run the script** using `./check_status.sh`.
+### 3. Extract Domain from URL
+Extract the domain from the provided URL using `awk`.
+```bash
+  DOMAIN=$(echo $URL | awk -F[/:] '{print $4}')
+```
 
-Remember to replace `http://your-web-server.com` with the actual URL of the web server you want to check. This script is a great example of how shell scripting can be used to automate monitoring tasks and provide quick insights into the status of web services.
+### 4. Check HTTP Status Code
+Retrieve the HTTP status code with `curl`.
+```bash
+  HTTP_STATUS=$(curl -o /dev/null -s -w "%{http_code}\n" $URL)
+```
+
+### 5. Fetch WHOIS Information
+Retrieve WHOIS data for the domain.
+```bash
+  WHOIS_INFO=$(whois $DOMAIN)
+```
+
+### 6. Fetch DNS Information
+Check if `dig` is available and use it. If not, fall back to `host`.
+```bash
+  if command -v dig > /dev/null 2>&1; then
+    DNS_INFO=$(dig +short $DOMAIN)
+  else
+    DNS_INFO=$(host -t A $DOMAIN | awk '{print $4}')
+  fi
+```
+
+### 7. Fetch HTTP Headers
+Get HTTP headers with `curl`.
+```bash
+  HEADERS=$(curl -I $URL 2>/dev/null)
+```
+
+### 8. Extract Relevant WHOIS Information
+Extract registrar, creation date, and location from WHOIS data.
+```bash
+  REGISTRAR=$(echo "$WHOIS_INFO" | grep -i "Registrar:" | head -1 | awk -F: '{print $2}' | xargs)
+  CREATION_DATE=$(echo "$WHOIS_INFO" | grep -i "Creation Date:" | head -1 | awk -F: '{print $2}' | xargs)
+  LOCATION=$(echo "$WHOIS_INFO" | grep -i "Country:" | head -1 | awk -F: '{print $2}' | xargs)
+```
+
+### 9. Extract IP Address and Fetch IP Location and ASN
+Retrieve IP address and additional details using `ipinfo.io`.
+```bash
+  IP_ADDRESS=$(echo "$DNS_INFO" | grep -E "^[0-9.]+$" | head -1)
+  if [ -n "$IP_ADDRESS" ]; then
+    IP_INFO=$(curl -s "https://ipinfo.io/$IP_ADDRESS/json")
+    IP_LOCATION=$(echo "$IP_INFO" | grep -o '"city": "[^"]*"' | sed 's/"city": "\(.*\)"/\1/')
+    IP_REGION=$(echo "$IP_INFO" | grep -o '"region": "[^"]*"' | sed 's/"region": "\(.*\)"/\1/')
+    ASN=$(echo "$IP_INFO" | grep -o '"org": "[^"]*"' | sed 's/"org": "\(.*\)"/\1/')
+  else
+    IP_ADDRESS="Unknown"
+    IP_LOCATION="Unknown"
+    IP_REGION="Unknown"
+    ASN="Unknown"
+  fi
+```
+
+### 10. Extract Hosting Provider
+Parse HTTP headers to find the hosting provider.
+```bash
+  HOSTING_PROVIDER=$(echo "$HEADERS" | grep -i "server:" | awk '{print substr($0, index($0, $2))}' | tr -d '\r')
+```
+
+### 11. Check Domain Establishment Status
+Determine if the domain is recently established.
+```bash
+  CURRENT_DATE=$(date +%Y-%m-%d)
+  if [ -n "$CREATION_DATE" ]; then
+    CREATION_DATE_UNIX=$(date -j -f "%Y-%m-%d" "${CREATION_DATE%T*}" +%s 2>/dev/null)
+    CURRENT_DATE_UNIX=$(date +%s)
+    ESTABLISHED_DAYS=$(( (CURRENT_DATE_UNIX - CREATION_DATE_UNIX) / 86400 ))
+    if [ $ESTABLISHED_DAYS -le 365 ]; then
+      ESTABLISHED_STATUS="Recently established (potential scam)"
+    else
+      ESTABLISHED_STATUS="Established"
+    fi
+  else
+    ESTABLISHED_STATUS="Unknown"
+  fi
+```
+
+### 12. Display Results
+Output all gathered information to the user.
+```bash
+  echo "Website: $URL"
+  echo "HTTP Status: $HTTP_STATUS"
+
+  case "${HTTP_STATUS:0:1}" in
+    2)
+      echo "Success: The request was successful (status code: $HTTP_STATUS)."
+      ;;
+    3)
+      echo "Redirection: The request was redirected (status code: $HTTP_STATUS)."
+      ;;
+    4)
+      if [ "$HTTP_STATUS" -eq 404 ]; then
+        echo "Client Error: Not Found (status code: 404)."
+      else
+        echo "Client Error: The request contains bad syntax or cannot be fulfilled (status code: $HTTP_STATUS)."
+      fi
+      ;;
+    5)
+      if [ "$HTTP_STATUS" -eq 500 ]; then
+        echo "Server Error: Internal Server Error (status code: 500)."
+      elif [ "$HTTP_STATUS" -eq 503 ]; then
+        echo "Server Error: Service Unavailable (status code: 503)."
+      else
+        echo "Server Error: The server failed to fulfill an apparently valid request (status code: $HTTP_STATUS)."
+      fi
+      ;;
+    *)
+      echo "Unexpected status code: $HTTP_STATUS"
+      ;;
+  esac
+
+  echo "Registrar: ${REGISTRAR:-Unknown}"
+  echo "Creation Date: ${CREATION_DATE:-Unknown}"
+  echo "Location: ${LOCATION:-Unknown}"
+  echo "IP Address: ${IP_ADDRESS:-Unknown}"
+  echo "IP Location: ${IP_LOCATION:-$IP_REGION}"
+  echo "ASN: ${ASN:-Unknown}"
+  echo "Hosting Provider: ${HOSTING_PROVIDER:-Unknown}"
+  echo "Established Status: $ESTABLISHED_STATUS"
+```
+
+### 13. Continue or Exit
+Prompt the user to continue checking more websites or exit.
+```bash
+  read -p "Do you want to check another website? (yes/no): " RESPONSE
+  if [[ "$RESPONSE" != "yes" ]]; then
+    echo "Exiting script."
+    exit 0
+  fi
+done
+```
+
+## 🏃‍♂️ Running the Script
+
+1. Create and edit the script: `vi "website_check.sh"`.
+2. Press `i` to enter insert mode, paste the provided script, then press `Esc`, type `:wq`, and press `Enter` to save and exit.
+3. Make it executable with: `chmod +x website_check.sh`.
+4. Run the script using: `./website_check.sh`.
+
+## 📝 Full Code
+
+Here is the complete shell script code:
+
+```bash
+#!/usr/local/bin/bash
+# This script checks the HTTP status code of a web server and provides additional information.
+
+while true; do
+  # Prompt the user to enter the website URL
+  read -p "Enter the website URL (e.g., http://example.com): " URL
+
+  # Extract domain from URL
+  DOMAIN=$(echo $URL | awk -F[/:] '{print $4}')
+
+  # Check HTTP status code
+  HTTP_STATUS=$(curl -o /dev/null -s -w "%{http_code}\n" $URL)
+
+  # Fetch WHOIS information
+  WHOIS_INFO=$(whois $DOMAIN)
+
+  # Fetch DNS information using dig (ensure dig is installed)
+  if command -v dig > /dev/null 2>&1; then
+    DNS_INFO=$(dig +short $DOMAIN)
+  else
+    DNS_INFO=$(host -t A $DOMAIN | awk '{print $4}')
+  fi
+
+  # Fetch HTTP headers
+  HEADERS=$(curl -I $URL 2>/dev/null)
+
+  # Extract relevant WHOIS information
+  REGISTRAR=$(echo "$WHOIS_INFO" | grep -i "Registrar:" | head -1 | awk -F: '{print $2}' | xargs)
+  CREATION_DATE=$(echo "$WHOIS_INFO" | grep -i "Creation Date:" | head -1 | awk -F: '{print $2}' | xargs)
+  LOCATION=$(echo "$WHOIS_INFO" | grep -i "Country:" | head -1 | awk -F: '{print $2}' | xargs)
+
+  # Extract IP Address and fetch IP location and ASN using ipinfo.io
+  IP_ADDRESS=$(echo "$DNS_INFO" | grep -E "^[0-9.]+$" | head -1)
+  if [ -n "$IP_ADDRESS" ]; then
+    IP_INFO=$(curl -s "https://ipinfo.io/$IP_ADDRESS/json")
+    IP_LOCATION=$(echo "$IP_INFO" | grep -o '"city": "[^"]*"' | sed 's/"city": "\(.*\)"/\1/')
+    IP_REGION=$(echo "$IP_INFO" | grep -o '"region": "[^"]*"' | sed 's/"region": "\(.*\)"/\1/')
+    ASN=$(echo "$IP_INFO" | grep -o '"org": "[^"]*"' | sed 's/"org": "\(.*\)"/\1/')
+  else
+    IP_ADDRESS="Unknown"
+    IP_LOCATION="Unknown"
+    IP_REGION="Unknown"
+    ASN="Unknown"
+  fi
+
+  # Extract hosting provider from HTTP headers (Server header)
+  HOSTING_PROVIDER=$(echo "$HEADERS" | grep -i "server:" | awk '{print substr($0, index($0, $2))}' | tr -d '\r')
+
+  # Check if the domain is recently established
+  CURRENT_DATE=$(date +%Y-%m-%d)
+  if [ -n "$CREATION_DATE" ]; then
+    CREATION_DATE_UNIX=$(date -j -f "%Y-%m-%d" "${CREATION_DATE%T*}" +%s 2>/dev/null)
+    CURRENT_DATE_UNIX=$(date +%s)
+    ESTABLISHED_DAYS=$(( (CURRENT_DATE_UNIX - CREATION_DATE_UNIX) / 86400 ))
+    if [ $ESTABLISHED_DAYS -le 365 ]; then
+      ESTABLISHED_STATUS="Recently established (potential scam)"
+    else
+      ESTABLISHED_STATUS="Established"
+    fi
+  else
+    ESTABLISHED_STATUS="Unknown"
+  fi
+
+  # Display the results
+  echo "Website: $URL"
+  echo "HTTP Status: $HTTP_STATUS"
+
+  case "${HTTP_STATUS:0:1}" in
+    2)
+      echo "Success: The request was successful (status code: $HTTP_STATUS)."
+      ;;
+    3)
+      echo "Redirection: The request was redirected (status code: $HTTP_STATUS)."
+      ;;
+    4)
+      if [ "$HTTP_STATUS" -eq 404 ]; then
+        echo "Client Error: Not Found (status code: 404)."
+      else
+        echo "Client Error: The request contains bad syntax or cannot be fulfilled (status code: $HTTP_STATUS)."
+      fi
+      ;;
+    5)
+      if [ "$HTTP_STATUS" -eq 500 ]; then
+        echo "Server Error: Internal Server Error (status code: 500)."
+      elif [ "$HTTP_STATUS" -eq 503 ]; then
+        echo "Server Error: Service Unavailable (status code: 503)."
+      else
+        echo "Server Error: The server failed to fulfill an apparently valid request (status code: $HTTP_STATUS)."
+      fi
+      ;;
+    *)
+      echo "Unexpected status code: $HTTP_STATUS"
+      ;;
+  esac
+
+  echo "Registrar: ${REGISTRAR:-Unknown}"
+  echo "Creation Date: ${CREATION_DATE:-Unknown}"
+  echo "Location: ${LOCATION:-Unknown}"
+  echo "IP Address: ${IP_ADDRESS:-Unknown}"
+  echo "IP Location: ${IP_LOCATION:-$IP_REGION}"
+  echo "ASN: ${ASN:-Unknown}"
+  echo "Hosting Provider: ${HOSTING_PROVIDER:-Unknown}"
+  echo "Established Status: $ESTABLISHED_STATUS"
+
+  # Continue or exit
+  read -p "Do you want to check another website? (yes/no): " RESPONSE
+  if [[ "$RESPONSE" != "yes" ]]; then
+    echo "Exiting script."
+    exit 0
+  fi
+done
+```   
+
+## 🎉 Conclusion
+Congratulations! You've created a powerful shell script that provides a comprehensive analysis of any website. Use this tool to monitor and investigate websites with ease. Feel free to modify and extend it as needed!
+
+## 📹 Here is the Video Tutorial
+
+[Watch the Video Tutorial](https://example.com/video-tutorial)
