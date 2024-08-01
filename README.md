@@ -83,7 +83,7 @@ Python provides several ways to implement parallel programming. For arithmetic c
 
 ### Example
 
-Here’s a complete example that calculates the sum of numbers from 1 to 10,000 using 4 threads:
+Here’s an example that calculates the sum of numbers from 1 to 10,000 using 4 threads:
 
 ```python
 from concurrent.futures import ThreadPoolExecutor
