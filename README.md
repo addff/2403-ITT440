@@ -110,7 +110,7 @@ if __name__ == "__main__":
     print(f"Parallel Sum: {result}")
 ```
 
-###Output:
+### Output:
 ![image](https://github.com/user-attachments/assets/59561976-ecd5-4f5f-bf95-0e96e3502aad)
 
 ### Conclusion of Parallel Programming for Arithmetic Calculations
