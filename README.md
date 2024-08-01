@@ -2,13 +2,7 @@
 
 ### Overview
 
-This guide demonstrates how to calculate arithmetic numbers (e.g., sums, averages) using parallel programming in Python. Parallel programming allows you to perform multiple operations concurrently, which can significantly speed up computations, especially for large datasets.
-
-### Prerequisites
-
-- Python 3.x
-- Basic understanding of arithmetic operations
-- Familiarity with Python programming
+I will show how to calculate arithmetic numbers (e.g., sums, averages) using parallel programming in Python. Parallel programming allows you to perform multiple operations concurrently, which can significantly speed up computations, especially for large datasets.
 
 ### Installation
 
@@ -57,15 +51,20 @@ Python provides several ways to implement parallel programming. For arithmetic c
 
    Use `ThreadPoolExecutor` to parallelize the computation. Here’s how you can divide the workload among multiple threads:
 
-   ```python
-   def parallel_sum(numbers, num_threads):
-       chunk_size = len(numbers) // num_threads
-       chunks = [numbers[i:i + chunk_size] for i in range(0, len(numbers), chunk_size)]
+   ```
+    def parallel_sum(numbers, num_threads):
+    chunk_size = len(numbers) // num_threads
+    chunks = [numbers[i:i + chunk_size] for i in range(0, len(numbers), chunk_size)]
 
-       with ThreadPoolExecutor(max_workers=num_threads) as executor:
-           results = list(executor.map(calculate_sum, chunks))
+    print("Chunks of numbers to be summed:")
+    for i, chunk in enumerate(chunks):
+        print(f"Chunk {i+1}: {chunk}")
 
-       return sum(results)
+    with ThreadPoolExecutor(max_workers=num_threads) as executor:
+        results = list(executor.map(calculate_sum, chunks))
+
+    return sum(results)
+
    ```
 
    In this example, the `parallel_sum` function splits the list of numbers into chunks, processes each chunk in parallel, and then combines the results.
@@ -75,7 +74,7 @@ Python provides several ways to implement parallel programming. For arithmetic c
    Call the `parallel_sum` function with the appropriate number of threads:
 
    ```python
-   numbers = list(range(1, 10001))  # Example list of numbers
+   numbers = list(range(1, 101))  # Example list of numbers
    num_threads = 4  # Number of threads to use
    result = parallel_sum(numbers, num_threads)
    print(f"Parallel Sum: {result}")
@@ -83,7 +82,7 @@ Python provides several ways to implement parallel programming. For arithmetic c
 
 ### Example
 
-Here’s an example that calculates the sum of numbers from 1 to 10,000 using 4 threads:
+Here’s an example that calculates the sum of numbers from 1 to 100 using 4 threads:
 
 ```python
 from concurrent.futures import ThreadPoolExecutor
@@ -95,17 +94,24 @@ def parallel_sum(numbers, num_threads):
     chunk_size = len(numbers) // num_threads
     chunks = [numbers[i:i + chunk_size] for i in range(0, len(numbers), chunk_size)]
 
+    print("Chunks of numbers to be summed:")
+    for i, chunk in enumerate(chunks):
+        print(f"Chunk {i+1}: {chunk}")
+
     with ThreadPoolExecutor(max_workers=num_threads) as executor:
         results = list(executor.map(calculate_sum, chunks))
 
     return sum(results)
 
 if __name__ == "__main__":
-    numbers = list(range(1, 10001))
+    numbers = list(range(1, 101))
     num_threads = 4
     result = parallel_sum(numbers, num_threads)
     print(f"Parallel Sum: {result}")
 ```
+
+###Output:
+![image](https://github.com/user-attachments/assets/59561976-ecd5-4f5f-bf95-0e96e3502aad)
 
 ### Conclusion of Parallel Programming for Arithmetic Calculations
 
