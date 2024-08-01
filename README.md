@@ -1,7 +1,3 @@
-Sure, here’s a combined version of the previous sections into a single README file:
-
----
-
 ## Calculating Arithmetic Numbers Using Parallel Programming in Python
 
 ### Overview
